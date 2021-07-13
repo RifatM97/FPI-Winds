@@ -33,7 +33,7 @@ if N > 1
     h = plot(xunits, yunits, 'Color', 'r', 'LineWidth', 4);
     fill(xunits,yunits, "w");
     hold on
-    plot([zeros(1,N); xunits(1:10:end)], [zeros(1,N); yunits(1:10:end)],'color', 'r');
+    plot([repmat(x,1,N); xunits(1:10:end)], [repmat(y,1,N); yunits(1:10:end)],'color', 'r');
     hold off
     axis equal
 elseif N == 0
@@ -41,7 +41,7 @@ elseif N == 0
     xunits = r*cos(a) + x;
     yunits = r*sin(a) + y;
     h = plot(xunits, yunits, 'Color', 'r', 'LineWidth', 3);
-    fill(xunits,yunits, "w");
+    fill(xunits,yunits, "w","FaceAlpha","0.05");
 %     p = projcrs('UTM39SW84','Authority','IGNF')
 %     [lat,lon] = projinv(p, xunits, yunits)
 %     h = geoplot(lat,lon)
