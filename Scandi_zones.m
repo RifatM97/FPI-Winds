@@ -1,9 +1,28 @@
-function [h] = Scandi_zones(C,r)
+function h = Scandi_zones(C, geom)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Creating SCANDI zones 
+% This function plots concentric circles and straightlines from the center
+% of each circle to create the SCANDI zones. The function takes arguments
+% such as the coordinates of the centre C and a random input geom to define
+% whether the allignment needs to be towards geomagnetic north or
+% geographic north. If you want geomagnetic north allignment set geom = 1,
+% if you want geographic north allignment set geom = 0.
 
-figure;
-th = linspace(0,2*pi) ;   % angles 
+% Important !
+% Scandi_zones.m file must stay saved in the same directory of the other functions,
+% otherwise this script will not run correctly. Therefore it must stay 
+% inside the directory named "...\FPI-winds".
+
+% defining the radii of each circle
+r = [62.82272976
+188.4681893
+314.1136488
+439.7591083
+565.4045678
+];
+
+theta = 32; %%% CHANGE THIS TO 0 DEG TO KEEP ZONES GEO NORTH %%%
+h = figure;
+th = linspace(0,2*pi) ;   % Angles 
 
 % Creating the circles
 for i = 1:length(r)
@@ -23,7 +42,10 @@ for i = 1:length(th1)
     x0 = C(1)+r(1)*cos(th1(i)) ; y0 = C(2) +  r(1)*sin(th1(i)) ;
     x2 = C(1)+ r(2)*cos(th1(i)) ; y2 = C(2) + r(2)*sin(th1(i)) ; 
     x = x0+t*(x2-x0) ;y = y0+t*(y2-y0) ;
-    plot(x,y,'b');
+    s = plot(x,y,'b');
+    if geom == 1 %Geom = 1 as arguement represent magnetic north
+        rotate(s,[0 0 1],theta);
+    end
     hold on
 end
 
@@ -35,7 +57,12 @@ for i = 1:length(th1)
     x2 = C(1)+ r(2)*cos(th1(i)) ; y2 =C(2)+ r(2)*sin(th1(i)) ;
     x1 = C(1)+ r(end)*cos(th1(i)) ; y1 = C(2)+ r(end)*sin(th1(i)) ;
     x = x2+t*(x1-x2) ;y = y2+t*(y1-y2) ;
-    plot(x,y,'b');
+    s = plot(x,y,'b');
+    if geom == 1
+        rotate(s,[0 0 1],theta);
+    end
+    
+    
 end
 hold off
 axis on
